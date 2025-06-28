@@ -1,43 +1,69 @@
-'use client';
-import React, { useState, useEffect } from 'react';
-import { useWallet } from '../../../contexts/WalletContext';
-import { useReadContract, useReadContracts } from 'wagmi';
-import { Abi } from 'viem';
-import StrataForgeFactoryABI from '../../../app/components/ABIs/StrataForgeFactoryABI.json';
-import TraderDashboardLayout from './TraderDashboardLayout';
-import Link from 'next/link';
+"use client";
+import React, { useState, useEffect } from "react";
+import { useWallet } from "../../../contexts/WalletContext";
+import { useReadContract, useReadContracts } from "wagmi";
+import { Abi } from "viem";
+import StrataForgeFactoryABI from "../../../app/components/ABIs/StrataForgeFactoryABI.json";
+import StrataForgeAirdropFactoryABI from "../../../app/components/ABIs/StrataForgeAirdropFactoryABI.json";
+import TraderDashboardLayout from "./TraderDashboardLayout";
+import Link from "next/link";
 
 // SVG Icons for Token Types
 const Erc20Icon = () => (
-  <svg className="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <svg
+    className="w-5 h-5 text-purple-400"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
     <circle cx="12" cy="12" r="10" strokeWidth="2" />
     <path d="M12 6v12M6 12h12" strokeWidth="2" />
   </svg>
 );
 
 const Erc721Icon = () => (
-  <svg className="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <svg
+    className="w-5 h-5 text-purple-400"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
     <rect x="4" y="4" width="16" height="16" rx="2" strokeWidth="2" />
     <path d="M8 12h8" strokeWidth="2" />
   </svg>
 );
 
 const Erc1155Icon = () => (
-  <svg className="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <svg
+    className="w-5 h-5 text-purple-400"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
     <rect x="4" y="4" width="16" height="6" strokeWidth="2" />
     <rect x="4" y="12" width="16" height="6" strokeWidth="2" />
   </svg>
 );
 
 const MemeIcon = () => (
-  <svg className="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <svg
+    className="w-5 h-5 text-purple-400"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
     <circle cx="12" cy="12" r="10" strokeWidth="2" />
     <path d="M8 8h8M8 16h8" strokeWidth="2" />
   </svg>
 );
 
 const StableIcon = () => (
-  <svg className="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <svg
+    className="w-5 h-5 text-purple-400"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
     <path d="M12 4v16M8 8h8M8 16h8" strokeWidth="2" />
     <circle cx="12" cy="12" r="8" strokeWidth="2" />
   </svg>
@@ -45,7 +71,12 @@ const StableIcon = () => (
 
 // Token Placeholder Icon
 const TokenPlaceholderIcon = () => (
-  <svg className="w-16 h-16 text-gray-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <svg
+    className="w-16 h-16 text-gray-500 mx-auto"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
     <circle cx="12" cy="12" r="10" strokeWidth="1.5" />
     <path d="M12 6v12M6 12h12" strokeWidth="1.5" />
   </svg>
@@ -53,7 +84,12 @@ const TokenPlaceholderIcon = () => (
 
 // Airdrop Placeholder Icon
 const AirdropPlaceholderIcon = () => (
-  <svg className="w-16 h-16 text-gray-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <svg
+    className="w-16 h-16 text-gray-500 mx-auto"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
     <path
       d="M12 2v6m0 4v10m-6-6h12M4 10l2 2m14-2l-2 2"
       strokeWidth="1.5"
@@ -63,8 +99,13 @@ const AirdropPlaceholderIcon = () => (
   </svg>
 );
 
-const FACTORY_CONTRACT_ADDRESS = '0x59F42c3eEcf829b34d8Ca846Dfc83D3cDC105C3F' as const;
+const FACTORY_CONTRACT_ADDRESS =
+  "0xEaAf43B8C19B1E0CdEc61C8170A446BAc5F79954" as const;
 const factoryABI = StrataForgeFactoryABI as Abi;
+
+const AIRDROP_CONTRACT_ADDRESS =
+  "0x195dcF2E5340b5Fd3EC4BDBB94ADFeF09919CC8d" as const;
+const airdropFactoryABI = StrataForgeAirdropFactoryABI as Abi;
 
 interface Token {
   id: number;
@@ -84,12 +125,13 @@ interface Airdrop {
 }
 
 const TokenTraderDashboard = () => {
-  const { address, isConnected, isConnecting, connect, connectError } = useWallet();
+  const { address, isConnected, isConnecting, connect, connectError } =
+    useWallet();
   const [tokens, setTokens] = useState<Token[]>([]);
   const [airdrops, setAirdrops] = useState<Airdrop[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [userName, setUserName] = useState('Token Trader');
+  const [error, setError] = useState("");
+  const [userName, setUserName] = useState("Token Trader");
   const [expandedTokenId, setExpandedTokenId] = useState<number | null>(null);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -102,7 +144,7 @@ const TokenTraderDashboard = () => {
   const { data: totalTokens, error: totalTokensError } = useReadContract({
     address: FACTORY_CONTRACT_ADDRESS,
     abi: factoryABI,
-    functionName: 'getTotalTokenCount',
+    functionName: "getTotalTokenCount",
     query: { enabled: isConnected },
   });
 
@@ -113,19 +155,19 @@ const TokenTraderDashboard = () => {
     return Array.from({ length: count }, (_, i) => ({
       address: FACTORY_CONTRACT_ADDRESS,
       abi: factoryABI,
-      functionName: 'getTokenById',
+      functionName: "getTokenById",
       args: [i + 1],
     }));
   }, [totalTokens, isConnected]);
 
-  // Use getCreatorAirdrops for airdrop data
+  // Use getCreatorAirdrops for airdrop data from Airdrop Factory
   const airdropCalls = React.useMemo(() => {
     if (!isConnected || !address) return [];
     return [
       {
-        address: FACTORY_CONTRACT_ADDRESS,
-        abi: factoryABI,
-        functionName: 'getCreatorAirdrops',
+        address: AIRDROP_CONTRACT_ADDRESS, // Use airdrop factory address
+        abi: airdropFactoryABI,
+        functionName: "getCreatorAirdrops",
         args: [address],
       },
     ];
@@ -146,7 +188,7 @@ const TokenTraderDashboard = () => {
   // Process token data separately
   useEffect(() => {
     if (!isConnected || !address || !isMounted) {
-      setUserName('Token Trader');
+      setUserName("Token Trader");
       setLoading(false);
       return;
     }
@@ -157,15 +199,26 @@ const TokenTraderDashboard = () => {
     if (tokenData && tokenData.length > 0) {
       const allTokens = tokenData
         .map((result, index) => {
-          if (result.status === 'success' && result.result) {
-            const token = result.result as { name: string; symbol: string; tokenAddress: string; creator: string };
+          if (result.status === "success" && result.result) {
+            const token = result.result as {
+              tokenAddress: string;
+              name: string;
+              symbol: string;
+              initialSupply: bigint;
+              timestamp: bigint;
+              tokenType: number; // Enum: 0=ERC20, 1=ERC721, 2=ERC1155, 3=Memecoin, 4=Stablecoin
+              creator: string;
+            };
             if (token.name && token.symbol && token.tokenAddress) {
-              let type = 'erc20';
-              if (token.name.toLowerCase().includes('nft')) type = 'erc721';
-              else if (token.name.toLowerCase().includes('meme') || token.name.toLowerCase().includes('doge'))
-                type = 'meme';
-              else if (token.name.toLowerCase().includes('usd') || token.name.toLowerCase().includes('stable'))
-                type = 'stable';
+              // Map tokenType to string based on contract's TokenType enum
+              const typeMap: { [key: number]: string } = {
+                0: "erc20",
+                1: "erc721",
+                2: "erc1155",
+                3: "meme",
+                4: "stable",
+              };
+              const type = typeMap[token.tokenType] || "erc20"; // Default to erc20 if unknown
               return {
                 id: index + 1,
                 name: token.name,
@@ -189,7 +242,7 @@ const TokenTraderDashboard = () => {
     setLoading(false);
   }, [isConnected, address, tokenData, isMounted]);
 
-  // Process airdrops separately to avoid dependency on tokens state
+  // Process airdrops separately
   useEffect(() => {
     if (!isConnected || !address || !isMounted) return;
 
@@ -197,24 +250,33 @@ const TokenTraderDashboard = () => {
     if (airdropData && airdropData.length > 0) {
       const allAirdrops = airdropData
         .flatMap((result) => {
-          if (result.status === 'success' && result.result) {
+          if (result.status === "success" && result.result) {
             const airdropList = result.result as {
-              distributorAddress: string;
-              tokenAddress: string;
+              distributor: string; // Updated to match AirdropInfo struct
+              token: string;
               creator: string;
               startTime: bigint;
               totalRecipients: bigint;
               dropAmount: bigint;
+              tokenType: number;
+              reserved: number;
             }[];
             return airdropList.map((airdrop, airdropIndex) => {
-              // Find token by address instead of relying on tokens state
-              const tokenName = tokens.find((t) => t.address === airdrop.tokenAddress)?.name;
+              // Find token by address
+              const tokenName = tokens.find(
+                (t) => t.address === airdrop.token
+              )?.name;
               return {
                 id: airdropIndex + 1,
-                name: tokenName ? `${tokenName} Airdrop` : `Airdrop ${airdropIndex + 1}`,
-                tokenAddress: airdrop.tokenAddress,
-                status: airdrop.startTime <= BigInt(Math.floor(Date.now() / 1000)) ? 'Active' : 'Pending',
-                tasks: [], // Placeholder: Add tasks if supported by contract
+                name: tokenName
+                  ? `${tokenName} Airdrop`
+                  : `Airdrop ${airdropIndex + 1}`,
+                tokenAddress: airdrop.token,
+                status:
+                  airdrop.startTime <= BigInt(Math.floor(Date.now() / 1000))
+                    ? "Active"
+                    : "Pending",
+                tasks: [], // Placeholder: No tasks in AirdropInfo
               } as Airdrop;
             });
           }
@@ -230,12 +292,12 @@ const TokenTraderDashboard = () => {
   // Handle errors
   useEffect(() => {
     if (totalTokensError || tokenDataError || airdropDataError) {
-      console.error('Contract read errors:', {
+      console.error("Contract read errors:", {
         totalTokensError,
         tokenDataError,
         airdropDataError,
       });
-      setError('Failed to load data');
+      setError("Failed to load data");
       setLoading(false);
     }
   }, [totalTokensError, tokenDataError, airdropDataError]);
@@ -251,7 +313,10 @@ const TokenTraderDashboard = () => {
       <div className="absolute top-1/4 right-1/4">
         <div className="grid grid-cols-4 gap-3">
           {[...Array(16)].map((_, i) => (
-            <div key={i} className="w-1 h-1 bg-purple-500/10 rounded-full"></div>
+            <div
+              key={i}
+              className="w-1 h-1 bg-purple-500/10 rounded-full"
+            ></div>
           ))}
         </div>
       </div>
@@ -262,7 +327,10 @@ const TokenTraderDashboard = () => {
           ))}
         </div>
       </div>
-      <svg className="absolute top-0 left-0 w-full h-full" viewBox="0 0 1200 800">
+      <svg
+        className="absolute top-0 left-0 w-full h-full"
+        viewBox="0 0 1200 800"
+      >
         <path
           d="M200,100 Q400,50 600,100 T1000,100"
           stroke="rgba(147, 51, 234, 0.06)"
@@ -305,11 +373,46 @@ const TokenTraderDashboard = () => {
           <circle cx="100" cy="25" r="2" fill="rgba(147, 51, 234, 0.1)" />
           <circle cx="40" cy="50" r="2" fill="rgba(59, 130, 246, 0.1)" />
           <circle cx="80" cy="55" r="2" fill="rgba(147, 51, 234, 0.1)" />
-          <line x1="20" y1="20" x2="60" y2="15" stroke="rgba(147, 51, 234, 0.06)" strokeWidth="1" />
-          <line x1="60" y1="15" x2="100" y2="25" stroke="rgba(59, 130, 246, 0.06)" strokeWidth="1" />
-          <line x1="20" y1="20" x2="40" y2="50" stroke="rgba(147, 51, 234, 0.06)" strokeWidth="1" />
-          <line x1="60" y1="15" x2="80" y2="55" stroke="rgba(59, 130, 246, 0.06)" strokeWidth="1" />
-          <line x1="40" y1="50" x2="80" y2="55" stroke="rgba(147, 51, 234, 0.06)" strokeWidth="1" />
+          <line
+            x1="20"
+            y1="20"
+            x2="60"
+            y2="15"
+            stroke="rgba(147, 51, 234, 0.06)"
+            strokeWidth="1"
+          />
+          <line
+            x1="60"
+            y1="15"
+            x2="100"
+            y2="25"
+            stroke="rgba(59, 130, 246, 0.06)"
+            strokeWidth="1"
+          />
+          <line
+            x1="20"
+            y1="20"
+            x2="40"
+            y2="50"
+            stroke="rgba(147, 51, 234, 0.06)"
+            strokeWidth="1"
+          />
+          <line
+            x1="60"
+            y1="15"
+            x2="80"
+            y2="55"
+            stroke="rgba(59, 130, 246, 0.06)"
+            strokeWidth="1"
+          />
+          <line
+            x1="40"
+            y1="50"
+            x2="80"
+            y2="55"
+            stroke="rgba(147, 51, 234, 0.06)"
+            strokeWidth="1"
+          />
         </svg>
       </div>
       <div className="absolute top-10 right-1/3 w-64 h-64 bg-gradient-to-br from-purple-500/3 to-transparent rounded-full blur-3xl"></div>
@@ -328,14 +431,14 @@ const TokenTraderDashboard = () => {
       stable: <StableIcon />,
     };
     const typeLabels: { [key: string]: string } = {
-      erc20: 'ERC-20',
-      erc721: 'ERC-721',
-      erc1155: 'ERC-1155',
-      meme: 'Meme Coin',
-      stable: 'Stable Coin',
+      erc20: "ERC-20",
+      erc721: "ERC-721",
+      erc1155: "ERC-1155",
+      meme: "Meme Coin",
+      stable: "Stable Coin",
     };
     const icon = typeIcons[token.type] || <Erc20Icon />;
-    const label = typeLabels[token.type] || 'ERC-20';
+    const label = typeLabels[token.type] || "ERC-20";
 
     const isExpanded = expandedTokenId === token.id;
 
@@ -359,7 +462,9 @@ const TokenTraderDashboard = () => {
               {icon}
             </div>
             <div>
-              <h3 className="text-white font-semibold text-lg leading-tight">{token.name}</h3>
+              <h3 className="text-white font-semibold text-lg leading-tight">
+                {token.name}
+              </h3>
               <p className="text-gray-400 text-sm">{token.symbol}</p>
             </div>
           </div>
@@ -368,19 +473,27 @@ const TokenTraderDashboard = () => {
           </div>
         </div>
         <div className="mb-2">
-          <p className="text-gray-500 text-xs font-medium mb-1">Token Address</p>
+          <p className="text-gray-500 text-xs font-medium mb-1">
+            Token Address
+          </p>
           <p className="text-gray-300 text-sm font-mono bg-black/20 px-3 py-2 rounded-md truncate">
             {token.address}
           </p>
         </div>
-        <div className={`mb-0 bg-black/20 p-4 rounded-lg transition-all duration-300 overflow-hidden ${
-          isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 p-0'
-        }`}>
-          <p className="text-gray-500 text-xs font-medium mb-2">Token Details</p>
+        <div
+          className={`mb-0 bg-black/20 p-4 rounded-lg transition-all duration-300 overflow-hidden ${
+            isExpanded ? "max-h-96 opacity-100" : "max-h-0 opacity-0 p-0"
+          }`}
+        >
+          <p className="text-gray-500 text-xs font-medium mb-2">
+            Token Details
+          </p>
           <div className="space-y-2">
             <div>
               <p className="text-gray-400 text-sm">Deployer:</p>
-              <p className="text-gray-300 text-sm font-mono truncate">{token.creator || 'Unknown'}</p>
+              <p className="text-gray-300 text-sm font-mono truncate">
+                {token.creator || "Unknown"}
+              </p>
             </div>
             <div>
               <p className="text-gray-400 text-sm">Token Type:</p>
@@ -393,14 +506,14 @@ const TokenTraderDashboard = () => {
             onClick={toggleDetails}
             className="w-full px-4 py-2.5 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white text-sm font-medium rounded-lg transition-all duration-200"
           >
-            {isExpanded ? '▼ Hide Details' : '▶ View Details'}
+            {isExpanded ? "▼ Hide Details" : "▶ View Details"}
           </button>
         </div>
       </div>
     );
   });
 
-  TokenCard.displayName = 'TokenCard';
+  TokenCard.displayName = "TokenCard";
 
   // Airdrop Card Component
   const AirdropCard = ({ airdrop }: { airdrop: Airdrop }) => (
@@ -411,15 +524,20 @@ const TokenTraderDashboard = () => {
             <span className="text-lg">🪂</span>
           </div>
           <div>
-            <h3 className="text-white font-semibold text-lg leading-tight">{airdrop.name}</h3>
+            <h3 className="text-white font-semibold text-lg leading-tight">
+              {airdrop.name}
+            </h3>
             <p className="text-gray-400 text-sm">
-              {airdrop.tokenAddress.slice(0, 6)}...{airdrop.tokenAddress.slice(-4)}
+              {airdrop.tokenAddress.slice(0, 6)}...
+              {airdrop.tokenAddress.slice(-4)}
             </p>
           </div>
         </div>
         <div className="flex items-center space-x-1 bg-green-500/10 px-2 py-1 rounded-md">
           <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-          <span className="text-green-300 text-xs font-bold">{airdrop.status}</span>
+          <span className="text-green-300 text-xs font-bold">
+            {airdrop.status}
+          </span>
         </div>
       </div>
       {airdrop.tasks && airdrop.tasks.length > 0 && (
@@ -457,8 +575,12 @@ const TokenTraderDashboard = () => {
     <div className="min-h-screen bg-[#1A0D23] flex items-center justify-center p-4 relative">
       <BackgroundShapes />
       <div className="bg-[#1E1425]/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-purple-500/20 p-8 text-center relative z-10">
-        <h2 className="text-2xl font-bold text-white mb-2">Connect Your Wallet</h2>
-        <p className="text-gray-300 mb-6">Connect your wallet to access the StrataForge Token Trader dashboard</p>
+        <h2 className="text-2xl font-bold text-white mb-2">
+          Connect Your Wallet
+        </h2>
+        <p className="text-gray-300 mb-6">
+          Connect your wallet to access the StrataForge Token Trader dashboard
+        </p>
         {connectError && (
           <div className="mb-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-300 text-sm">
             Connection failed: {connectError.message}
@@ -468,10 +590,10 @@ const TokenTraderDashboard = () => {
           onClick={connect}
           disabled={isConnecting}
           className={`px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-600 text-white rounded-xl hover:opacity-90 transition ${
-            isConnecting ? 'opacity-50 cursor-not-allowed' : ''
+            isConnecting ? "opacity-50 cursor-not-allowed" : ""
           }`}
         >
-          {isConnecting ? 'Connecting...' : 'Connect Wallet'}
+          {isConnecting ? "Connecting..." : "Connect Wallet"}
         </button>
       </div>
     </div>
@@ -493,20 +615,26 @@ const TokenTraderDashboard = () => {
           className="welcome-section text-center mb-8 rounded-lg p-6 relative z-10"
           style={{
             background:
-              'radial-gradient(50% 206.8% at 50% 50%, rgba(10, 88, 116, 0.7) 0%, rgba(32, 23, 38, 0.7) 56.91%)',
+              "radial-gradient(50% 206.8% at 50% 50%, rgba(10, 88, 116, 0.7) 0%, rgba(32, 23, 38, 0.7) 56.91%)",
           }}
         >
           <h1 className="font-poppins font-semibold text-3xl md:text-4xl leading-[170%] mb-2">
             Welcome back, {userName} <span className="text-yellow-400">👋</span>
           </h1>
           <p className="font-vietnam font-normal text-base leading-[170%] tracking-[1%] text-[hsl(var(--foreground)/0.7)]">
-            Discover tokens, claim airdrops, and trade on the StrataForge marketplace
+            Discover tokens, claim airdrops, and trade on the StrataForge
+            marketplace
           </p>
         </div>
 
         {error && (
           <div className="mb-6 bg-red-500/10 border border-red-500/20 rounded-xl p-4 flex items-center space-x-3 relative z-10">
-            <svg className="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg
+              className="w-5 h-5 text-red-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -525,8 +653,18 @@ const TokenTraderDashboard = () => {
               href="/dashboard/marketplace"
               className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-lg transition-all duration-200 font-medium text-sm"
             >
-              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              <svg
+                className="w-4 h-4 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                />
               </svg>
               Visit Marketplace
             </Link>
@@ -542,7 +680,9 @@ const TokenTraderDashboard = () => {
               <div className="mb-4">
                 <TokenPlaceholderIcon />
               </div>
-              <p className="text-gray-400 text-lg mb-6">No tokens available to discover yet</p>
+              <p className="text-gray-400 text-lg mb-6">
+                No tokens available to discover yet
+              </p>
               <Link
                 href="/dashboard/marketplace"
                 className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-lg transition-all duration-200 font-medium"
@@ -553,15 +693,25 @@ const TokenTraderDashboard = () => {
           )}
         </div>
 
-         <div className="mb-12 relative z-10">
+        <div className="mb-12 relative z-10">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
             <h2 className="text-2xl font-bold text-white">Airdrops</h2>
             <Link
               href="/dashboard/airdrops"
               className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-lg transition-all duration-200 font-medium text-sm"
             >
-              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              <svg
+                className="w-4 h-4 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                />
               </svg>
               View All Airdrops
             </Link>
@@ -577,7 +727,9 @@ const TokenTraderDashboard = () => {
               <div className="mb-4">
                 <AirdropPlaceholderIcon />
               </div>
-              <p className="text-gray-400 text-lg mb-6">No airdrops available yet. Check back soon!</p>
+              <p className="text-gray-400 text-lg mb-6">
+                No airdrops available yet. Check back soon!
+              </p>
               <Link
                 href="/dashboard/airdrops"
                 className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-lg transition-all duration-200 font-medium"
@@ -591,10 +743,5 @@ const TokenTraderDashboard = () => {
     </TraderDashboardLayout>
   );
 };
-
-// Fix: For the image warning in Footer.tsx, ensure the <Image> component with src="/strataforge-logo.png"
-// has both width and height attributes set, or include style={{ width: 'auto', height: 'auto' }}.
-// Example:
-// <Image src="/strataforge-logo.png" alt="StrataForge Logo" width={150} height={50} style={{ width: 'auto', height: 'auto' }} />
 
 export default TokenTraderDashboard;
