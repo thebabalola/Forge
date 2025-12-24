@@ -184,6 +184,73 @@ Implement user registration functionality in VaultFactory contract. Users must r
 
 ---
 
+### Issue #4.5: Chainlink Price Feeds Integration
+
+**Status:** ❌ PENDING  
+
+**Labels:** `smart-contracts`, `feature`, `chainlink`, `price-feeds`  
+
+**Priority:** MEDIUM
+
+**Description:**
+
+Integrate Chainlink Price Feeds into UserVault contract to provide real-time USD valuation of vault assets and shares. This enables better portfolio tracking and accurate asset pricing.
+
+**Acceptance Criteria:**
+
+- [ ] Add Chainlink dependencies:
+  - [ ] Install `@chainlink/contracts` package
+  - [ ] Import `AggregatorV3Interface`
+- [ ] Modify UserVault contract:
+  - [ ] Add price feed address to constructor
+  - [ ] Store price feed reference as state variable
+  - [ ] Implement `getTotalValueUSD()` function
+  - [ ] Implement `getSharePriceUSD()` function
+  - [ ] Implement `getAssetPriceUSD()` function
+- [ ] Price feed functions:
+  - [ ] `getTotalValueUSD()` - Returns total vault value in USD
+  - [ ] `getSharePriceUSD()` - Returns price per share in USD
+  - [ ] `getAssetPriceUSD()` - Returns current asset price from Chainlink
+- [ ] VaultFactory updates:
+  - [ ] Store price feed addresses for different assets
+  - [ ] Pass correct price feed when creating vaults
+  - [ ] Admin function to update price feed addresses
+- [ ] Testing:
+  - [ ] Mock Chainlink price feed for tests
+  - [ ] Test USD value calculations
+  - [ ] Test with different price scenarios
+  - [ ] Test price feed failures/fallbacks
+- [ ] Documentation:
+  - [ ] Document price feed addresses for Base Sepolia
+  - [ ] Add NatSpec for new functions
+  - [ ] Update README with Chainlink integration
+
+**Implementation Notes:**
+
+- Use Chainlink Price Feeds available on Base Sepolia testnet
+- Handle price feed decimals correctly (usually 8 decimals)
+- Implement fallback mechanism for price feed failures
+- Consider staleness checks for price data
+- Price feeds for common assets:
+  - ETH/USD: Available on Base Sepolia
+  - USDC/USD: Available on Base Sepolia
+  - Add more as needed
+
+**Base Sepolia Price Feed Addresses:**
+- ETH/USD: `0x4aDC67696bA383F43DD60A9e78F2C97Fbbfc7cb1`
+- USDC/USD: Check Chainlink docs for latest
+
+**Example Implementation:**
+```solidity
+function getTotalValueUSD() public view returns (uint256) {
+    (, int256 price,,,) = priceFeed.latestRoundData();
+    uint256 totalAssets = totalAssets();
+    return (totalAssets * uint256(price)) / 1e8;
+}
+```
+
+---
+
 ### Issue #5: VaultFactory Contract — Vault Creation
 
 **Status:** ❌ PENDING  

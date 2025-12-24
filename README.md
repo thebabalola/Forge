@@ -162,6 +162,96 @@ NEXT_PUBLIC_NETWORK=base-sepolia
 
 **Note:** Contracts should be audited before mainnet deployment.
 
+## Future Enhancements
+
+### Chainlink Integration Roadmap
+
+SmartX is designed to integrate with Chainlink services for enhanced functionality and automation. The following enhancements are planned for future releases:
+
+#### Phase 1: Price Feeds (In Progress)
+**Status:** Planned for next release
+
+- **Chainlink Price Feeds Integration**
+  - Real-time USD valuation of vault assets
+  - Accurate share pricing in USD terms
+  - Multi-asset vault support with proper pricing
+  - Portfolio performance tracking
+
+**Implementation:**
+- Add Chainlink Price Feed to `UserVault.sol`
+- Implement `getTotalValueUSD()` and `getSharePriceUSD()` functions
+- Display USD values in frontend dashboard
+- Enable better portfolio tracking and analytics
+
+**Files to modify:**
+- `contracts/UserVault.sol` - Add price feed integration
+- `contracts/VaultFactory.sol` - Store price feed addresses
+- Frontend components - Display USD values
+
+---
+
+#### Phase 2: Automation (High Impact)
+**Status:** Future consideration
+
+- **Chainlink Automation (formerly Keepers)**
+  - Automated vault rebalancing
+  - Periodic yield harvesting
+  - Protocol switching based on yield
+  - Gas-optimized execution
+
+**Implementation:**
+- Implement `checkUpkeep()` and `performUpkeep()` in `UserVault.sol`
+- Set up rebalancing logic based on protocol yields
+- Register vaults with Chainlink Automation network
+- Automated yield optimization without manual intervention
+
+**Files to modify:**
+- `contracts/UserVault.sol` - Add automation interface and rebalancing logic
+- `contracts/VaultFactory.sol` - Automation registry management
+
+**Benefits:**
+- Hands-free vault management
+- Optimal yield allocation
+- Reduced gas costs through batching
+- 24/7 monitoring and execution
+
+---
+
+#### Phase 3: VRF (Optional - Gamification)
+**Status:** Future consideration
+
+- **Chainlink VRF (Verifiable Random Function)**
+  - Lottery/reward system for vault holders
+  - Random protocol selection for diversification
+  - Fair incentive distribution mechanisms
+  - Gamification features
+
+**Implementation:**
+- Add lottery/reward system to `VaultFactory.sol`
+- Implement VRF for provably fair random selection
+- Create incentive mechanisms for long-term holders
+- Monthly/quarterly reward distributions
+
+**Files to modify:**
+- `contracts/VaultFactory.sol` - Add VRF integration and lottery logic
+- Frontend - Lottery participation interface
+
+**Use Cases:**
+- Monthly lottery for active vault holders
+- Random bonus yield distribution
+- Fair protocol allocation
+- Community engagement rewards
+
+---
+
+### Additional Planned Features
+
+- **Multi-signature Admin Controls** - Enhanced security for protocol management
+- **Governance System** - Community-driven protocol decisions
+- **Advanced Analytics** - Detailed performance metrics and historical data
+- **Mobile App** - Native mobile experience for iOS and Android
+- **Subgraph Integration** - Faster data queries and historical tracking
+
 ## License
 
 MIT License - see LICENSE file for details.
