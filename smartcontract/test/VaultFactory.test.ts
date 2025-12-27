@@ -2,8 +2,8 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { VaultFactory, MockERC20, ChainlinkMock } from "../typechain-types";
 import { SignerWithAddress } from "@nomicfoundation/hardhat-ethers/signers";
-import { time, anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
-import { time as networkTime } from "@nomicfoundation/hardhat-network-helpers";
+import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
+import { time } from "@nomicfoundation/hardhat-network-helpers";
 
 describe("VaultFactory - User Registration", function () {
   let factory: VaultFactory;
@@ -17,9 +17,10 @@ describe("VaultFactory - User Registration", function () {
 
     // Deploy VaultFactory
     const VaultFactoryFactory = await ethers.getContractFactory("VaultFactory");
-    factory = await VaultFactoryFactory.deploy(owner.address);
+    factory = (await VaultFactoryFactory.deploy(owner.address)) as unknown as VaultFactory;
     await factory.waitForDeployment();
   });
+
 
   describe("Deployment", function () {
     it("Should set the correct owner", async function () {
@@ -338,12 +339,12 @@ describe("VaultFactory - User Registration", function () {
     beforeEach(async function () {
       // Deploy Mock Token
       const MockERC20Factory = await ethers.getContractFactory("MockERC20");
-      mockAsset = await MockERC20Factory.deploy("Mock Token", "MTK", 18);
+      mockAsset = (await MockERC20Factory.deploy("Mock Token", "MTK", 18)) as unknown as MockERC20;
       await mockAsset.waitForDeployment();
 
       // Deploy Mock Price Feed
       const ChainlinkMockFactory = await ethers.getContractFactory("ChainlinkMock");
-      mockPriceFeed = await ChainlinkMockFactory.deploy(200000000000, 8); // $2000
+      mockPriceFeed = (await ChainlinkMockFactory.deploy(200000000000, 8)) as unknown as ChainlinkMock; // $2000
       await mockPriceFeed.waitForDeployment();
 
       // Register user1
