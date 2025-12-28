@@ -507,4 +507,106 @@ describe("VaultFactory - User Registration", function () {
         .to.emit(factory, "PriceFeedUpdated");
     });
   });
+
+  describe("Protocol Address Management", function () {
+    const mockAaveAddress = "0x1111111111111111111111111111111111111111";
+    const mockCompoundAddress = "0x2222222222222222222222222222222222222222";
+    const mockUniswapAddress = "0x3333333333333333333333333333333333333333";
+    const mockWETHAddress = "0x4444444444444444444444444444444444444444";
+
+    it("Should allow admin to set Aave address", async function () {
+      await expect(factory.connect(owner).setAaveAddress(mockAaveAddress))
+        .to.emit(factory, "ProtocolAddressSet")
+        .withArgs("Aave", mockAaveAddress, owner.address);
+
+      expect(await factory.getAaveAddress()).to.equal(mockAaveAddress);
+    });
+
+    it("Should allow admin to set Compound address", async function () {
+      await expect(factory.connect(owner).setCompoundAddress(mockCompoundAddress))
+        .to.emit(factory, "ProtocolAddressSet")
+        .withArgs("Compound", mockCompoundAddress, owner.address);
+
+      expect(await factory.getCompoundAddress()).to.equal(mockCompoundAddress);
+    });
+
+    it("Should allow admin to set Uniswap address", async function () {
+      await expect(factory.connect(owner).setUniswapAddress(mockUniswapAddress))
+        .to.emit(factory, "ProtocolAddressSet")
+        .withArgs("Uniswap", mockUniswapAddress, owner.address);
+
+      expect(await factory.getUniswapAddress()).to.equal(mockUniswapAddress);
+    });
+
+    it("Should allow admin to set WETH address", async function () {
+      await expect(factory.connect(owner).setWETHAddress(mockWETHAddress))
+        .to.emit(factory, "ProtocolAddressSet")
+        .withArgs("WETH", mockWETHAddress, owner.address);
+
+      expect(await factory.getWETHAddress()).to.equal(mockWETHAddress);
+    });
+
+    it("Should prevent non-admin from setting protocol addresses", async function () {
+      await expect(
+        factory.connect(user1).setAaveAddress(mockAaveAddress)
+      ).to.be.revertedWithCustomError(factory, "NotAdmin");
+
+      await expect(
+        factory.connect(user1).setCompoundAddress(mockCompoundAddress)
+      ).to.be.revertedWithCustomError(factory, "NotAdmin");
+
+      await expect(
+        factory.connect(user1).setUniswapAddress(mockUniswapAddress)
+      ).to.be.revertedWithCustomError(factory, "NotAdmin");
+
+      await expect(
+        factory.connect(user1).setWETHAddress(mockWETHAddress)
+      ).to.be.revertedWithCustomError(factory, "NotAdmin");
+    });
+
+    it("Should prevent setting zero address for Aave", async function () {
+      await expect(
+        factory.connect(owner).setAaveAddress(ethers.ZeroAddress)
+      ).to.be.revertedWithCustomError(factory, "ZeroAddress");
+    });
+
+    it("Should prevent setting zero address for Compound", async function () {
+      await expect(
+        factory.connect(owner).setCompoundAddress(ethers.ZeroAddress)
+      ).to.be.revertedWithCustomError(factory, "ZeroAddress");
+    });
+
+    it("Should prevent setting zero address for Uniswap", async function () {
+      await expect(
+        factory.connect(owner).setUniswapAddress(ethers.ZeroAddress)
+      ).to.be.revertedWithCustomError(factory, "ZeroAddress");
+    });
+
+    it("Should prevent setting zero address for WETH", async function () {
+      await expect(
+        factory.connect(owner).setWETHAddress(ethers.ZeroAddress)
+      ).to.be.revertedWithCustomError(factory, "ZeroAddress");
+    });
+
+    it("Should return zero address initially for all protocols", async function () {
+      expect(await factory.getAaveAddress()).to.equal(ethers.ZeroAddress);
+      expect(await factory.getCompoundAddress()).to.equal(ethers.ZeroAddress);
+      expect(await factory.getUniswapAddress()).to.equal(ethers.ZeroAddress);
+      expect(await factory.getWETHAddress()).to.equal(ethers.ZeroAddress);
+    });
+
+    it("Should allow updating protocol addresses", async function () {
+      // Set initial addresses
+      await factory.connect(owner).setAaveAddress(mockAaveAddress);
+      expect(await factory.getAaveAddress()).to.equal(mockAaveAddress);
+
+      // Update to new address
+      const newAddress = "0x5555555555555555555555555555555555555555";
+      await expect(factory.connect(owner).setAaveAddress(newAddress))
+        .to.emit(factory, "ProtocolAddressSet")
+        .withArgs("Aave", newAddress, owner.address);
+
+      expect(await factory.getAaveAddress()).to.equal(newAddress);
+    });
+  });
 });
