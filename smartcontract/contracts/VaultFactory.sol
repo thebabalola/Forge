@@ -47,6 +47,9 @@ contract VaultFactory is Ownable {
     /// @dev Thrown when trying to remove the deployer admin
     error CannotRemoveDeployer();
 
+    /// @dev Thrown when trying to set a zero address
+    error ZeroAddress();
+
     /*//////////////////////////////////////////////////////////////
                             STATE VARIABLES
     //////////////////////////////////////////////////////////////*/
@@ -92,6 +95,18 @@ contract VaultFactory is Ownable {
 
     /// @dev Total number of admins
     uint256 public adminCount;
+
+    /// @dev Aave lending pool address
+    address public aaveLendingPool;
+
+    /// @dev Compound comptroller address
+    address public compoundComptroller;
+
+    /// @dev Uniswap router address
+    address public uniswapRouter;
+
+    /// @dev WETH token address
+    address public wethAddress;
 
     /*//////////////////////////////////////////////////////////////
                                 EVENTS
@@ -143,6 +158,14 @@ contract VaultFactory is Ownable {
      * @param removedBy The address of the admin who removed the admin
      */
     event AdminRemoved(address indexed admin, address indexed removedBy);
+
+    /**
+     * @dev Emitted when a protocol address is set
+     * @param protocol The name of the protocol
+     * @param newAddress The new address for the protocol
+     * @param setBy The address of the admin who set the address
+     */
+    event ProtocolAddressSet(string indexed protocol, address indexed newAddress, address indexed setBy);
 
     /*//////////////////////////////////////////////////////////////
                             CONSTRUCTOR
@@ -442,5 +465,81 @@ contract VaultFactory is Ownable {
      */
     function getAdminCount() external view returns (uint256) {
         return adminCount;
+    }
+
+    /*//////////////////////////////////////////////////////////////
+                    PROTOCOL ADDRESS MANAGEMENT
+    //////////////////////////////////////////////////////////////*/
+
+    /**
+     * @dev Set the Aave lending pool address
+     * @param aaveAddress The address of the Aave lending pool
+     */
+    function setAaveAddress(address aaveAddress) external onlyAdmin {
+        if (aaveAddress == address(0)) revert ZeroAddress();
+        aaveLendingPool = aaveAddress;
+        emit ProtocolAddressSet("Aave", aaveAddress, msg.sender);
+    }
+
+    /**
+     * @dev Set the Compound comptroller address
+     * @param compoundAddress The address of the Compound comptroller
+     */
+    function setCompoundAddress(address compoundAddress) external onlyAdmin {
+        if (compoundAddress == address(0)) revert ZeroAddress();
+        compoundComptroller = compoundAddress;
+        emit ProtocolAddressSet("Compound", compoundAddress, msg.sender);
+    }
+
+    /**
+     * @dev Set the Uniswap router address
+     * @param uniswapAddress The address of the Uniswap router
+     */
+    function setUniswapAddress(address uniswapAddress) external onlyAdmin {
+        if (uniswapAddress == address(0)) revert ZeroAddress();
+        uniswapRouter = uniswapAddress;
+        emit ProtocolAddressSet("Uniswap", uniswapAddress, msg.sender);
+    }
+
+    /**
+     * @dev Set the WETH token address
+     * @param wethAddr The address of the WETH token
+     */
+    function setWETHAddress(address wethAddr) external onlyAdmin {
+        if (wethAddr == address(0)) revert ZeroAddress();
+        wethAddress = wethAddr;
+        emit ProtocolAddressSet("WETH", wethAddr, msg.sender);
+    }
+
+    /**
+     * @dev Get the Aave lending pool address
+     * @return The address of the Aave lending pool
+     */
+    function getAaveAddress() external view returns (address) {
+        return aaveLendingPool;
+    }
+
+    /**
+     * @dev Get the Compound comptroller address
+     * @return The address of the Compound comptroller
+     */
+    function getCompoundAddress() external view returns (address) {
+        return compoundComptroller;
+    }
+
+    /**
+     * @dev Get the Uniswap router address
+     * @return The address of the Uniswap router
+     */
+    function getUniswapAddress() external view returns (address) {
+        return uniswapRouter;
+    }
+
+    /**
+     * @dev Get the WETH token address
+     * @return The address of the WETH token
+     */
+    function getWETHAddress() external view returns (address) {
+        return wethAddress;
     }
 }
