@@ -68,7 +68,7 @@ contract UserVault is ERC20, IERC4626, Ownable {
     error InsufficientBalance();
 
     /// @dev Thrown when operation is attempted while vault is paused
-    error VaultPaused();
+    error EnforcedPause();
 
     /*//////////////////////////////////////////////////////////////
                                 EVENTS
@@ -147,7 +147,7 @@ contract UserVault is ERC20, IERC4626, Ownable {
      * @dev Modifier to make a function callable only when the vault is not paused
      */
     modifier whenNotPaused() {
-        if (_paused) revert VaultPaused();
+        if (_paused) revert EnforcedPause();
         _;
     }
 
@@ -636,7 +636,7 @@ contract UserVault is ERC20, IERC4626, Ownable {
      * @dev Only the vault owner can pause. Emits VaultPaused event
      */
     function pause() external onlyOwner {
-        if (_paused) revert VaultPaused();
+        if (_paused) revert EnforcedPause();
         _paused = true;
         emit VaultPaused(address(this), msg.sender);
     }
@@ -646,7 +646,7 @@ contract UserVault is ERC20, IERC4626, Ownable {
      * @dev Only the vault owner can unpause. Emits VaultUnpaused event
      */
     function unpause() external onlyOwner {
-        if (!_paused) revert VaultPaused();
+        if (!_paused) revert EnforcedPause();
         _paused = false;
         emit VaultUnpaused(address(this), msg.sender);
     }
