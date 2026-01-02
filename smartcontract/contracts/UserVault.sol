@@ -189,6 +189,7 @@ contract UserVault is ERC20, IERC4626, Ownable {
     function deposit(uint256 assets, address receiver) 
         external 
         override 
+        whenNotPaused
         returns (uint256 shares) 
     {
         require(assets > 0, "UserVault: cannot deposit 0");
@@ -213,6 +214,7 @@ contract UserVault is ERC20, IERC4626, Ownable {
     function mint(uint256 shares, address receiver) 
         external 
         override 
+        whenNotPaused
         returns (uint256 assets) 
     {
         require(shares > 0, "UserVault: cannot mint 0");
