@@ -1,11 +1,11 @@
-# StrataForge
+# Forge
 
 
-StrataForge is a no-code, unified platform that empowers creators, businesses, and communities to deploy tokens, manage campaigns, and distribute airdrops without requiring blockchain development expertise.
+Forge is a no-code, unified platform that empowers creators, businesses, and communities to deploy tokens, manage campaigns, and distribute airdrops without requiring blockchain development expertise.
 
 ## 🚀 Project Overview
 
-StrataForge simplifies blockchain interactions, making token deployment accessible to non-technical users while providing powerful features for advanced users. Our platform aims to democratize token creation and campaign management, reducing barriers to entry in the Web3 space while maintaining security and flexibility.
+Forge simplifies blockchain interactions, making token deployment accessible to non-technical users while providing powerful features for advanced users. Our platform aims to democratize token creation and campaign management, reducing barriers to entry in the Web3 space while maintaining security and flexibility.
 
 ### Key Features
 
@@ -35,7 +35,7 @@ StrataForge simplifies blockchain interactions, making token deployment accessib
 1. Clone the repository:
    ```bash
    git clone https://github.com/Strataforge/frontend.git
-   cd StrataForge
+   cd Forge
    ```
 
 2. Install dependencies:
@@ -113,7 +113,7 @@ For other deployment methods, refer to the [Next.js deployment documentation](ht
 
 ## 👥 Contributing
 
-We welcome contributions to StrataForge! Please read our [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines on how to proceed.
+We welcome contributions to Forge! Please read our [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines on how to proceed.
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
@@ -129,9 +129,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For questions or support, please reach out to:
 
-- Email: support@StrataForge.io
-- Twitter: [@StrataForge](https://twitter.com/StrataForge)
-- Discord: [StrataForge Community](https://discord.gg/StrataForge)
+- Email: support@Forge.io
+- Twitter: [@Forge](https://twitter.com/Forge)
+- Discord: [Forge Community](https://discord.gg/Forge)
 
 ## 🙏 Acknowledgments
 
@@ -145,7 +145,7 @@ For questions or support, please reach out to:
 
 ---
 
-**StrataForge** - Democratizing Token Creation | Launching Q3 2025
+**Forge** - Democratizing Token Creation | Launching Q3 2025
 
 
 
