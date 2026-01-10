@@ -6,7 +6,7 @@ import "./UserVault.sol";
 
 /**
  * @title VaultFactory
- * @dev Factory contract for creating and managing user vaults on SmartX platform
+ * @dev Factory contract for creating and managing user vaults on ForgeX platform
  * @notice This contract handles user registration and vault deployment
  */
 contract VaultFactory is Ownable {

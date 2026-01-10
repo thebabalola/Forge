@@ -1,6 +1,6 @@
 # Smart Contracts Issues
 
-This file contains all GitHub issues for the SmartX smart contracts. Each issue is ready to be copied into GitHub.
+This file contains all GitHub issues for the ForgeX smart contracts. Each issue is ready to be copied into GitHub.
 
 ## ✅ Completed Issues
 

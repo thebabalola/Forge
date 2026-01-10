@@ -1,10 +1,10 @@
-# SmartX
+# ForgeX
 
 A decentralized vault platform enabling users to create multiple ERC-4626 compliant vaults for automated yield generation on Base Mainnet.
 
 ## Overview
 
-SmartX is a comprehensive DeFi platform that allows users to:
+ForgeX is a comprehensive DeFi platform that allows users to:
 
 - **Create Multiple Vaults**: Each user can create multiple personal ERC-4626 compliant vaults
 - **Automated Yield Generation**: Deploy assets to DeFi protocols (Aave, Compound, Uniswap) automatically
@@ -15,7 +15,7 @@ SmartX is a comprehensive DeFi platform that allows users to:
 ## Project Structure
 
 ```
-SmartX/
+ForgeX/
 ├── smartcontract/          # Solidity smart contracts
 │   ├── contracts/          # Contract source files
 │   ├── test/              # Contract tests
@@ -165,7 +165,7 @@ NEXT_PUBLIC_NETWORK=base
 
 ### Chainlink Integration Roadmap
 
-SmartX is designed to integrate with Chainlink services for enhanced functionality and automation. The following enhancements are planned for future releases:
+ForgeX is designed to integrate with Chainlink services for enhanced functionality and automation. The following enhancements are planned for future releases:
 
 #### Phase 1: Price Feeds (In Progress)
 **Status:** Planned for next release
@@ -257,7 +257,7 @@ MIT License - see LICENSE file for details.
 
 ## Links
 
-- **Repository:** [https://github.com/Richiey1/SmartX](https://github.com/Richiey1/SmartX)
+- **Repository:** [https://github.com/thebabalola/forge](https://github.com/thebabalola/forge)
 - **BaseScan Explorer:** [https://basescan.org/](https://basescan.org/)
 - **Documentation:** See individual README files in `smartcontract/` and `frontend/` directories
 

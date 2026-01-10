@@ -14,7 +14,7 @@ describe("UserVault - Compound Integration", function () {
   let vaultFactory: VaultFactory;
 
   const INITIAL_MINT = ethers.parseEther("10000");
-  const VAULT_NAME = "SmartX Vault Token";
+  const VAULT_NAME = "ForgeX Vault Token";
   const VAULT_SYMBOL = "svToken";
   const depositAmount = ethers.parseEther("1000");
 

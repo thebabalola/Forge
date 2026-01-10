@@ -13,7 +13,7 @@ describe("UserVault", function () {
   let priceFeed: ChainlinkMock;
 
   const INITIAL_MINT = ethers.parseEther("10000");
-  const VAULT_NAME = "SmartX Vault Token";
+  const VAULT_NAME = "ForgeX Vault Token";
   const VAULT_SYMBOL = "svToken";
 
   beforeEach(async function () {

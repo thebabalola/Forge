@@ -1,7 +1,7 @@
 {
-  "name": "smartx-smartcontracts",
+  "name": "forgex-smartcontracts",
   "version": "0.1.0",
-  "description": "Smart contracts for SmartX - ERC-4626 vault platform on Base Mainnet",
+  "description": "Smart contracts for ForgeX - ERC-4626 vault platform on Base Mainnet",
   "main": "index.js",
   "scripts": {
     "compile": "hardhat compile",

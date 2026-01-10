@@ -1,6 +1,6 @@
 # Frontend Issues
 
-This file contains all GitHub issues for the SmartX frontend. Each issue is ready to be copied into GitHub.
+This file contains all GitHub issues for the ForgeX frontend. Each issue is ready to be copied into GitHub.
 
 ## ✅ Completed Issues
 
@@ -79,7 +79,7 @@ Create `config/wagmi.ts` and `config/adapter.ts` to expose providers and signers
 
 **Description:**
 
-Polish UI using Tailwind; ensure components are responsive and accessible. Implement a cohesive design system for SmartX.
+Polish UI using Tailwind; ensure components are responsive and accessible. Implement a cohesive design system for ForgeX.
 
 **Acceptance Criteria:**
 
@@ -95,7 +95,7 @@ Polish UI using Tailwind; ensure components are responsive and accessible. Imple
 - Modern, responsive UI implemented across all pages
 - Tailwind CSS used throughout
 - Dark mode support via Tailwind dark: classes
-- Use red color scheme with black, grey, and white accents (SmartX brand colors)
+- Use red color scheme with black, grey, and white accents (ForgeX brand colors)
 
 ---
 
@@ -109,7 +109,7 @@ Polish UI using Tailwind; ensure components are responsive and accessible. Imple
 
 **Description:**
 
-Create a professional logo and brand identity for SmartX. The logo should represent intelligence, automation, and multiple vaults. Should work well in both light and dark modes.
+Create a professional logo and brand identity for ForgeX. The logo should represent intelligence, automation, and multiple vaults. Should work well in both light and dark modes.
 
 **Acceptance Criteria:**
 
@@ -147,7 +147,7 @@ Complete UI rebrand with a modern, professional design. Create a new landing pag
 - [ ] Remove existing landing page content
 - [ ] Design and implement new layout structure:
   - [ ] Header/Navbar (with logo, navigation, wallet connect)
-  - [ ] Hero section (compelling introduction to SmartX)
+  - [ ] Hero section (compelling introduction to ForgeX)
   - [ ] Features section (highlighting multi-vault capabilities)
   - [ ] Main content area (explaining ERC-4626, yield generation)
   - [ ] Footer (links, social, copyright)
