@@ -90,8 +90,6 @@ Implement the ERC-4626 interface (`IERC4626.sol`) in the contracts directory. Th
 
 ---
 
-## ❌ Pending Issues
-
 ### Issue #3: UserVault Contract — Core ERC-4626 Implementation
 
 **Status:** ✅ COMPLETED
@@ -240,16 +238,6 @@ Integrate Chainlink Price Feeds into UserVault contract to provide real-time USD
 
 - ETH/USD: `0x71041dddad3595F745215C98a901844ED99Db595`
 - USDC/USD: `0x7e860098F58bBFC8648a4311b374B1D669a2bc6B`
-
-**Example Implementation:**
-
-```solidity
-function getTotalValueUSD() public view returns (uint256) {
-    (, int256 price,,,) = priceFeed.latestRoundData();
-    uint256 totalAssets = totalAssets();
-    return (totalAssets * uint256(price)) / 1e8;
-}
-```
 
 ---
 
@@ -636,7 +624,7 @@ Write comprehensive test suite for VaultFactory contract covering all functions,
 
 ### Issue #13: Comprehensive Test Suite — UserVault
 
-**Status:** ❌ PENDING
+**Status:** ✅ COMPLETED
 
 **Labels:** `smart-contracts`, `testing`, `vault`, `erc4626`
 
@@ -648,45 +636,47 @@ Write comprehensive test suite for UserVault contract covering ERC-4626 complian
 
 **Acceptance Criteria:**
 
-- [ ] Create `test/UserVault.test.js`
-- [ ] Test ERC-4626 functions:
-  - [ ] `deposit()` - First deposit, subsequent deposits
-  - [ ] `withdraw()` - Withdraw assets
-  - [ ] `mint()` - Mint shares
-  - [ ] `redeem()` - Redeem shares
-  - [ ] `convertToShares()` - Share calculations
-  - [ ] `convertToAssets()` - Asset calculations
-  - [ ] `totalAssets()` - Asset tracking
-  - [ ] Preview functions
-  - [ ] Max functions
-- [ ] Test share calculations:
-  - [ ] First deposit (1:1 ratio)
-  - [ ] Proportional deposits
-  - [ ] With yield generation
-  - [ ] Edge cases (zero assets, zero shares)
-- [ ] Test pause/unpause:
-  - [ ] Pause functionality
-  - [ ] Cannot operate when paused
-  - [ ] Unpause functionality
-- [ ] Test access control:
-  - [ ] Owner-only functions
-  - [ ] Non-owner cannot call restricted functions
-- [ ] Test protocol allocations:
-  - [ ] Set allocations
-  - [ ] Validation
-  - [ ] Event emission
-- [ ] Test ERC-20 share token functionality
-- [ ] Test edge cases and error scenarios
-- [ ] Test coverage > 90%
+- [x] Create `test/UserVault.test.js`
+- [x] Test ERC-4626 functions:
+  - [x] `deposit()` - First deposit, subsequent deposits
+  - [x] `withdraw()` - Withdraw assets
+  - [x] `mint()` - Mint shares
+  - [x] `redeem()` - Redeem shares
+  - [x] `convertToShares()` - Share calculations
+  - [x] `convertToAssets()` - Asset calculations
+  - [x] `totalAssets()` - Asset tracking
+  - [x] Preview functions
+  - [x] Max functions
+- [x] Test share calculations:
+  - [x] First deposit (1:1 ratio)
+  - [x] Proportional deposits
+  - [x] With yield generation
+  - [x] Edge cases (zero assets, zero shares)
+- [x] Test pause/unpause:
+  - [x] Pause functionality
+  - [x] Cannot operate when paused
+  - [x] Unpause functionality
+- [x] Test access control:
+  - [x] Owner-only functions
+  - [x] Non-owner cannot call restricted functions
+- [x] Test protocol allocations:
+  - [x] Set allocations
+  - [x] Validation
+  - [x] Event emission
+- [x] Test ERC-20 share token functionality
+- [x] Test edge cases and error scenarios
+- [x] Test coverage > 90%
 
 **Implementation Notes:**
 
-- Test ERC-4626 compliance thoroughly
-- Use fixtures for mock assets
-- Test with various amounts and scenarios
-- Verify share calculations are correct
+- Consolidated all UserVault tests into `test/UserVault.test.ts`.
+- Added coverage for Aave and Compound integrations.
+- Verified all 109 tests pass.
+- Satisfies ERC-4626 compliance and ForgeX specific logic.
 
 ---
+
+## ❌ Pending Issues
 
 ### Issue #14: Integration Tests
 
@@ -789,7 +779,7 @@ Optimize contract code for gas efficiency. Use gas reporting tools and implement
 - [ ] Gas optimization techniques:
   - [ ] Pack storage variables
   - [ ] Use custom errors instead of strings
-  - [ ] Optimize loops
+  - [x] Optimize loops
   - [ ] Use events instead of storage where possible
   - [ ] Cache storage reads
 - [ ] Gas reporting:
