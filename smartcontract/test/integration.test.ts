@@ -92,4 +92,52 @@ describe("ForgeX Integration Tests", function () {
       expect(await asset.balanceOf(await aliceVault.getAddress())).to.equal(depositAmount);
     });
   });
+
+  describe("Journey 2: Protocol Management & Yield", function () {
+    let aliceVault: UserVault;
+    const depositAmount = ethers.parseUnits("1000", 18);
+
+    before(async function () {
+      const aliceVaults = await vaultFactory.getUserVaults(alice.address);
+      aliceVault = await ethers.getContractAt("UserVault", aliceVaults[0]);
+    });
+
+    it("Alice should allocate and deploy to Aave & Compound", async function () {
+      const aaveAlloc = ethers.parseUnits("400", 18);
+      const compoundAlloc = ethers.parseUnits("300", 18);
+
+      // 1. Set Allocations
+      await aliceVault.connect(alice).setProtocolAllocation("Aave", aaveAlloc);
+      await aliceVault.connect(alice).setProtocolAllocation("Compound", compoundAlloc);
+
+      // 2. Deploy
+      await aliceVault.connect(alice).deployToAave(aaveAlloc);
+      await aliceVault.connect(alice).deployToCompound(compoundAlloc);
+
+      // 3. Verify
+      expect(await aliceVault.getAaveBalance()).to.equal(aaveAlloc);
+      // compound balance is estimated via state var
+      expect(await aliceVault.totalAssets()).to.equal(depositAmount); 
+      
+      // Check idle balance in vault
+      const idle = await asset.balanceOf(await aliceVault.getAddress());
+      expect(idle).to.equal(depositAmount - aaveAlloc - compoundAlloc);
+    });
+
+    it("Alice should withdraw from protocols and redeem from vault", async function () {
+      const withdrawFromAave = ethers.parseUnits("200", 18);
+      await aliceVault.connect(alice).withdrawFromAave(withdrawFromAave);
+      
+      expect(await aliceVault.getAaveBalance()).to.equal(ethers.parseUnits("200", 18));
+
+      // Alice redeems 500 shares
+      const redeemAmount = ethers.parseUnits("500", 18);
+      const balanceBefore = await asset.balanceOf(alice.address);
+      
+      await aliceVault.connect(alice).redeem(redeemAmount, alice.address, alice.address);
+      
+      const balanceAfter = await asset.balanceOf(alice.address);
+      expect(balanceAfter - balanceBefore).to.equal(redeemAmount);
+    });
+  });
 });
