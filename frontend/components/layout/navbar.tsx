@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { Logo } from '@/components/logo';
-import { Button } from '@/components/ui/button';
+import { WalletConnect } from '@/components/wallet-connect';
 
 export function Navbar() {
   return (
@@ -26,8 +26,7 @@ export function Navbar() {
         </nav>
       </div>
       <div className="flex items-center gap-4">
-        {/* Placeholder for Wallet Connect Button */}
-        <Button variant="outline" disabled>Connect Wallet</Button>
+        <WalletConnect />
       </div>
     </div>
   );
