@@ -218,10 +218,10 @@ Integrate Chainlink Price Feeds into UserVault contract to provide real-time USD
   - [x] Test USD value calculations
   - [x] Test with different price scenarios
   - [x] Test price feed failures/fallbacks
-- [ ] Documentation:
-  - [ ] Document price feed addresses for Base Sepolia
+- [x] Documentation:
+  - [x] Document price feed addresses for Base Sepolia
   - [x] Add NatSpec for new functions
-  - [ ] Update README with Chainlink integration
+  - [x] Update README with Chainlink integration
 
 **Implementation Notes:**
 
@@ -714,116 +714,13 @@ Write integration tests covering the full workflow: user registration, vault cre
 - Covered three major "User Journeys"
 - Fixed `totalAssets` bug discovered during integration testing
 
----
-
-## ❌ Pending Issues
-
-### Issue #15: Deployment Scripts
-
-**Status:** ❌ PENDING
-
-**Labels:** `smart-contracts`, `deployment`, `scripts`
-
-**Priority:** HIGH
-
-**Description:**
-
-Create deployment scripts for VaultFactory and initialize it with admin setup. Prepare for Base Sepolia deployment.
-
-**Acceptance Criteria:**
-
-- [ ] Create `scripts/deploy.js`:
-  - [ ] Deploy VaultFactory contract
-  - [ ] Initialize factory (if needed)
-  - [ ] Verify deployment
-  - [ ] Save deployment addresses
-- [ ] Create `scripts/initialize.js`:
-  - [ ] Set protocol addresses (Aave, Compound, Uniswap, WETH)
-  - [ ] Add additional admins (optional)
-  - [ ] Verify initialization
-- [ ] Create `scripts/verify.js`:
-  - [ ] Verify contracts on Base Sepolia explorer
-  - [ ] Support constructor arguments
-- [ ] Deployment artifacts:
-  - [ ] Save addresses to JSON file
-  - [ ] Save ABIs
-  - [ ] Deployment transaction hashes
-- [ ] Environment variable support
-- [ ] Error handling
-- [ ] Network configuration
-
-**Implementation Notes:**
-
-- Use Hardhat's deployment features
-- Support multiple networks
-- Save deployment info for frontend integration
-- Add verification delay for explorer indexing
-
----
-
-### Issue #16: Gas Optimization
-
-**Status:** ❌ PENDING
-
-**Labels:** `smart-contracts`, `optimization`, `gas`
-
-**Priority:** MEDIUM
-
-**Description:**
-
-Optimize contract code for gas efficiency. Use gas reporting tools and implement optimizations.
-
-**Acceptance Criteria:**
-
-- [ ] Pack storage variables
-- [ ] Use custom errors instead of strings
-- [x] Optimize loops
-- [ ] Use events instead of storage where possible
-- [ ] Cache storage reads
-- [ ] Baseline gas usage for key functions
-- [ ] Comparison after optimizations
-- [ ] Document gas costs
-
-**Implementation Notes:**
-
-- Use Hardhat's gas reporter plugin
-- Compare before/after optimizations
-- Document trade-offs
-- Consider using libraries for common functions
-
----
-
-### Issue #17: Security Audit Preparation
-
-**Status:** ❌ PENDING
-
-**Labels:** `smart-contracts`, `security`, `audit`
-
-**Priority:** HIGH
-
-**Description:**
-
-Prepare contracts for security audit. Add documentation, review code, and fix known vulnerabilities.
-
-**Acceptance Criteria:**
-
-- [ ] Code review checklist (Reentrancy, Access Control, etc.)
-- [ ] Documentation (NatSpec, Architecture)
-- [ ] Test coverage (> 95% code coverage)
-- [ ] Security considerations document
-- [ ] Known issues/limitations document
-
-**Implementation Notes:**
-
-- Review OpenZeppelin security best practices
-- Use Slither or similar tools for static analysis
-- Prepare audit scope document
+**Completed:** Implemented in `test/integration.test.ts` with coverage for major user journeys and bug fixes.
 
 ---
 
 ### Issue #18: Contract Documentation & NatSpec
 
-**Status:** ❌ PENDING
+**Status:** ✅ COMPLETED
 
 **Labels:** `smart-contracts`, `documentation`
 
@@ -835,10 +732,10 @@ Add comprehensive NatSpec documentation to all contracts, functions, and events.
 
 **Acceptance Criteria:**
 
-- [ ] NatSpec documentation for all contracts, functions, events
-- [ ] Use `@notice`, `@dev`, `@param`, `@return` tags
+- [x] NatSpec documentation for all contracts, functions, events
+- [x] Use `@notice`, `@dev`, `@param`, `@return` tags
 - [ ] Generate documentation using solidity-docgen
-- [ ] Architecture documentation (relationships, flow diagrams)
+- [x] Architecture documentation (relationships, flow diagrams)
 
 **Implementation Notes:**
 
@@ -847,6 +744,37 @@ Add comprehensive NatSpec documentation to all contracts, functions, and events.
 - Keep documentation up to date with code
 
 ---
+
+### Issue #18: Contract Documentation & NatSpec
+
+**Status:** ✅ COMPLETED
+
+**Labels:** `smart-contracts`, `documentation`
+
+**Priority:** MEDIUM
+
+**Description:**
+
+Add comprehensive NatSpec documentation to all contracts, functions, and events. Generate documentation from NatSpec.
+
+**Acceptance Criteria:**
+
+- [x] NatSpec documentation for all contracts, functions, events
+- [x] Use `@notice`, `@dev`, `@param`, `@return` tags
+- [ ] Generate documentation using solidity-docgen
+- [x] Architecture documentation (relationships, flow diagrams)
+
+**Implementation Notes:**
+
+- Follow Solidity NatSpec standard
+- Document edge cases and error conditions
+- Keep documentation up to date with code
+
+---
+
+## ❌ Pending Issues
+
+### Issue #15: Deployment Scripts
 
 ## 📝 Issue Template
 
